@@ -59,6 +59,7 @@ public class MyAdapter extends BaseAdapter {
 
         ViewHolder viewHolder = (ViewHolder) view.getTag();
      //    viewHolder.imageView.setImageDrawable(arrayList.get(position).drawable);
+        new MyImageLoader().getImageByThread(viewHolder.imageView,arrayList.get(position).drawable);
         viewHolder.titleText.setText(arrayList.get(position).title);
         viewHolder.detailText.setText(arrayList.get(position).detail);
 

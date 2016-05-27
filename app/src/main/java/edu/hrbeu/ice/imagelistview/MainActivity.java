@@ -25,10 +25,10 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.inject(this);
         arrayList = new ArrayList<>();
 
-        for (int i = 0; i < 56; i++) {
+        for (int i = 1; i <=48; i++) {
             ItemBean itemBean = new ItemBean();
-            itemBean.drawable = "";
-            itemBean.title = "";
+            itemBean.drawable = "https://raw.githubusercontent.com/LqcIce/PicStore/master/pic_"+(i<10?"0"+i:i)+".gif";
+            itemBean.title = "item第"+i+"项";
             arrayList.add(itemBean);
         }
 
