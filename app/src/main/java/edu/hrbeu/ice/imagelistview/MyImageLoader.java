@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.LruCache;
 import android.widget.ImageView;
 
 import java.io.BufferedInputStream;
@@ -27,24 +28,28 @@ import java.util.HashMap;
  */
 public class MyImageLoader {
 
-    private ImageView mImageView ;
-    private  Handler handler = new Handler(){
+
+    private ImageView mImageView;
+    private String mUrl;
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            mImageView.setImageBitmap((Bitmap)msg.obj);
+            if (mImageView.getTag().equals(mUrl))
+                mImageView.setImageBitmap((Bitmap) msg.obj);
         }
     };
 
     public void getImageByThread(ImageView imageView, final String url) {
         mImageView = imageView;
+        mUrl = url;
         new Thread() {
             @Override
             public void run() {
                 super.run();
                 Bitmap bitmap = getImage(url);
                 Message message = Message.obtain();
-                message.obj=bitmap;
+                message.obj = bitmap;
                 handler.sendMessage(message);
 
             }

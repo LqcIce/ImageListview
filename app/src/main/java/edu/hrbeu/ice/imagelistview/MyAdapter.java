@@ -58,8 +58,10 @@ public class MyAdapter extends BaseAdapter {
         }
 
         ViewHolder viewHolder = (ViewHolder) view.getTag();
-     //    viewHolder.imageView.setImageDrawable(arrayList.get(position).drawable);
-        new MyImageLoader().getImageByThread(viewHolder.imageView,arrayList.get(position).drawable);
+        //    viewHolder.imageView.setImageDrawable(arrayList.get(position).drawable);
+        viewHolder.imageView.setImageResource(R.mipmap.ic_launcher);
+        viewHolder.imageView.setTag(arrayList.get(position).drawable);
+        new MyImageLoader().getImageByThread(viewHolder.imageView, arrayList.get(position).drawable);
         viewHolder.titleText.setText(arrayList.get(position).title);
         viewHolder.detailText.setText(arrayList.get(position).detail);
 
@@ -71,5 +73,7 @@ public class MyAdapter extends BaseAdapter {
         ImageView imageView;
         TextView titleText;
         TextView detailText;
+
+
     }
 }
