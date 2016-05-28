@@ -7,7 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.ListViewCompat;
 import android.util.LruCache;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 
 import java.io.BufferedInputStream;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by ice on 2016/5/27.
@@ -42,6 +45,21 @@ public class MyImageLoader {
     }
 
     /**
+     * 滚动停止时，批量载入当前显示的item对应图片
+     *
+     * @param view
+     * @param start
+     * @param end
+     * @param arrayList
+     */
+    public void loadAllImage(AbsListView view, int start, int end, ArrayList<ItemBean> arrayList) {
+
+        for (int i = start; i < end; i++) {
+            getImageByThread((ImageView) view.findViewWithTag(arrayList.get(i).drawable), arrayList.get(i).drawable);
+        }
+    }
+
+    /**
      * 添加元素到LruCache
      *
      * @param url
@@ -62,7 +80,6 @@ public class MyImageLoader {
      */
     public Bitmap getFromLruCache(String url) {
 
-
         return mLruCache.get(url);
     }
 
@@ -76,6 +93,16 @@ public class MyImageLoader {
 //                mImageView.setImageBitmap((Bitmap) msg.obj);
 //        }
 //    };
+
+    public boolean getImageByCache(final ImageView imageView, final String url) {
+        if (getFromLruCache(url) != null) {
+            //if (imageView.getTag().equals(url))
+            imageView.setImageBitmap(getFromLruCache(url));
+            return true;
+        }
+        return false;
+    }
+
 
     /**
      * 通过多线程异步请求图片，如果LruCache中已存在该图片，则直接使用，否则再开线程异步请求
@@ -112,7 +139,8 @@ public class MyImageLoader {
                 }
             }.start();
         } else {
-            imageView.setImageBitmap(getFromLruCache(url));
+            //if (imageView.getTag().equals(url))
+           // imageView.setImageBitmap(getFromLruCache(url));
         }
     }
 
@@ -144,5 +172,6 @@ public class MyImageLoader {
         }
         return null;
     }
+
 
 }

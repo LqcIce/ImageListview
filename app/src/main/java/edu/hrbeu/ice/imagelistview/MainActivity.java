@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        final MyAdapter myAdapter = new MyAdapter(MainActivity.this, arrayList);
+        final MyAdapter myAdapter = new MyAdapter(MainActivity.this, arrayList,listview);
         listview.setAdapter(myAdapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
