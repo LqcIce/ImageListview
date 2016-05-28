@@ -1,7 +1,6 @@
 package edu.hrbeu.ice.imagelistview;
 
 import android.content.Context;
-import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +16,13 @@ import java.util.ArrayList;
 public class MyAdapter extends BaseAdapter {
     ArrayList<ItemBean> arrayList;
     Context context;
-
+    MyImageLoader myImageLoader;
 
     public MyAdapter(Context context, ArrayList<ItemBean> arrayList) {
         super();
         this.context = context;
         this.arrayList = arrayList;
+        myImageLoader = new MyImageLoader(context);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class MyAdapter extends BaseAdapter {
         //    viewHolder.imageView.setImageDrawable(arrayList.get(position).drawable);
         viewHolder.imageView.setImageResource(R.mipmap.ic_launcher);
         viewHolder.imageView.setTag(arrayList.get(position).drawable);
-        new MyImageLoader().getImageByThread(viewHolder.imageView, arrayList.get(position).drawable);
+        myImageLoader.getImageByThread(viewHolder.imageView, arrayList.get(position).drawable);
         viewHolder.titleText.setText(arrayList.get(position).title);
         viewHolder.detailText.setText(arrayList.get(position).detail);
 
